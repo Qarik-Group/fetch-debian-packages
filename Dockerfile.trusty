@@ -1,6 +1,9 @@
 FROM ubuntu:trusty
 
-RUN apt-get update && apt-get install jq -f
+RUN apt-get update && \ 
+  apt-get install -y jq curl && \
+  curl -L -o /tmp/dpkg-list-ubuntu-trusty.txt https://raw.githubusercontent.com/cloudfoundry/bosh-linux-stemcell-builder/master/bosh-stemcell/spec/assets/dpkg-list-ubuntu-trusty.txt && \
+  apt-get install -y /tmp/dpkg-list-ubuntu-trusty.txt
 VOLUME /apt-cache
 VOLUME /apt-config
 COPY scripts /scripts
