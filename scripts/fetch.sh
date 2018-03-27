@@ -17,5 +17,13 @@ mkdir -p "$stateDir"
 cp /etc/apt/sources.list "$sourceList"
 cp /etc/apt/trusted.gpg "$trustedKeys"
 
+
+if [[ ! -f /apt-config/apt.json ]]; then
+  packages=$@
+  echo "No /apt-config/apt.json found, looking for: $packages"
+else
+  packages=$(jq -r ".packages[]" /apt-config/apt.json)
+fi
+
 apt-get update ${options}
-apt-get install ${options} -y "$@"
+apt-get install ${options} -y $packages
