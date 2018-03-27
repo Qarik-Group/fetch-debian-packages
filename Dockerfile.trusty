@@ -1,0 +1,5 @@
+FROM ubuntu:trusty
+
+VOLUME /apt-cache
+COPY scripts /scripts
+
